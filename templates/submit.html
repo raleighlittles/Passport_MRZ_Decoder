@@ -3,6 +3,7 @@
 <head>
 	<title>{{ title }}</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/bootstrap-grid.css') }}">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
@@ -11,10 +12,10 @@
 			font-family: 'Montserrat', sans-serif;
 		}
 	</style>
-	<div class="col-lg-12 text-center">
+	<div class="col">
 		<div class="jumbotron">
-		<h1 class="display">Passport MRZ decoder</h1>
-		<p class="lead">Enter both lines of your passport's machine-readable zone text below. Each line should be 44 characters long.</p>
+		<h1 class="display"> Passport MRZ decoder</h1>
+		<p class="lead">Enter both lines of your passport's machine-readable zone text below, or upload a photo of your passport instead. Each line should be 44 characters long.</p>
 
 		{% if success %}
 			<p class="lead text-success">MRZ decoded!</p>
@@ -30,28 +31,29 @@
      {% endfor %}
 	</div>
 
-		<div class="col-md-8 ml-5">
+		<div class="col">
 		<form action="{{ url_for('decode_passport_mrz') }}" method="POST">
 			
 
 			{{ form.hidden_tag() }}
 
+            <div class="form-group">
 			{{ form.mrz_line_1.label() }}
-			{{ form.mrz_line_1(class="form-control pt-4") }}
+			{{ form.mrz_line_1(class="form-control") }}
 
             {{ form.mrz_line_2.label() }}
-			{{ form.mrz_line_2.(class="form-control pt-4") }}
+			{{ form.mrz_line_2(class="form-control") }}
+            </div>
 
+            <div class="form-group">
             {{ form.passport_img_file.label() }}
             {{ form.passport_img_file }}
+            </div>
 
 			{{ form.submit(class="btn btn-outline-success btn-lg ml-1 mt-5") }}
 
-
 		</form>
 	</div>
-	<p class="text-info ml-5 pt-4">**All fields are required.</p>
-
 </body>
 
 <!-- Footer -->
