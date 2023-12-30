@@ -38,13 +38,15 @@ def decode_passport_mrz():
 
             if uploaded_photo is not None:
 
-                flask_app.logger.info(f"User submitted a passport photo of size {uploaded_photo.content_length}")
+                flask_app.logger.info(f"User submitted a passport photo: '{uploaded_photo.filename}' with size {uploaded_photo.content_length}")
 
-                temp_file_path = os.path.join(flask_app.instance_path, f"{num_passport_photos}.jpg")
+                temp_file_path = os.path.join(os.getcwd(), uploaded_photo.filename)
 
                 uploaded_photo.save(temp_file_path)
 
                 mrz_lines_from_img = passport_mrz_td3_decoder.extract_mrz_from_passport_image(temp_file_path)
+
+                flask_app.logger.info(f"Decoded text from file: {mrz_lines_from_img}")
                 result = passport_mrz_td3_decoder.decode_passport_mrz(f"{mrz_lines_from_img[0]}\n{mrz_lines_from_img[1]}")
 
             elif form.mrz_line_1 is not None and form.mrz_line_2 is not None:
