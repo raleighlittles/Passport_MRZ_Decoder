@@ -1,0 +1,5 @@
+mrz==0.6.2
+pytesseract==0.3.10
+Flask==3.0.0
+flask_wtf==1.2.1
+wtforms==3.1.1
