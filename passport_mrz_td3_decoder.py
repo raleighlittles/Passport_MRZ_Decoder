@@ -14,7 +14,7 @@ def create_dict_from_result(mrz_result) -> dict:
     # Uses 2-digit years (no century) instead of the standard 4-digit year
     passport_date_fmt = "%y%m%d"
 
-    passport_data = dict({"surname": mrz_result.surname, "name": mrz_result.name, "country_issued": mrz_result.country, "owner_nationality": mrz_result.nationality, "birth_date": datetime.datetime.strptime(mrz_result.birth_date, passport_date_fmt),
+    passport_data = dict({"surname": mrz_result.surname, "first_name": mrz_result.name, "country_issued": mrz_result.country, "owner_nationality": mrz_result.nationality, "birth_date": datetime.datetime.strptime(mrz_result.birth_date, passport_date_fmt),
                          "expiration_date": datetime.datetime.strptime(mrz_result.expiry_date, passport_date_fmt), "owner_sex": mrz_result.sex, "document_type": mrz_result.document_type, "document_number": mrz_result.document_number, "optional_data": mrz_result.optional_data})
     hash_data = dict({"birth_date": mrz_result.birth_date_hash, "expiry_date": mrz_result.expiry_date_hash,
                      "document_number": mrz_result.document_number_hash, "optional_data": mrz_result.optional_data_hash, "final": mrz_result.final_hash})
