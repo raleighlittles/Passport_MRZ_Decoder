@@ -23,16 +23,17 @@
 		</div>
 		
 		{% for message  in form.mrz_line_1.errors %}
-		   <div class="flash">{{ message }}</div>
+		   <div class="flash">Error validating line 1: {{ message }}</div>
 		{% endfor %}
 
         {% for message  in form.mrz_line_2.errors %}
-        <div class="flash">{{ message }}</div>
-     {% endfor %}
+        <div class="flash">Error validating line 2: {{ message }}</div>
+        {% endfor %}
+
 	</div>
 
 		<div class="col">
-		<form action="{{ url_for('decode_passport_mrz') }}" method="POST">
+		<form action="{{ url_for('decode_passport_mrz') }}" method="POST" enctype="multipart/form-data">
 			
 
 			{{ form.hidden_tag() }}
