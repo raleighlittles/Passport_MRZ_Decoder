@@ -1,40 +1,69 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Thanks!</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/bootstrap.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Thanks!</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/bootstrap.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+
+<h1> Values </h1>
 <table class="table table-hover">
     <thead class="thead-dark">
-      <tr>
-        <th scope="col">Surname/Last name</th>
-        <th scope="col">First name</th>
-        <th scope="col">Country issued </th>
-        <th scope="col">Owner's nationality</th>
-        <th scope="col">Birth Date</th>
-        <th scope="col">Expiration Date</th>
-        <th scope="col">Owner's sex</th>
-        <th scope="col">Document Type</th>
-        <th scope="col">Document #</th>
-        <th scope="col">Optional Data</th>
-      </tr>
+        <tr>
+            <th scope="col">Surname/Last name</th>
+            <th scope="col">First name</th>
+            <th scope="col">Country issued </th>
+            <th scope="col">Owner's nationality</th>
+            <th scope="col">Birth Date</th>
+            <th scope="col">Expiration Date</th>
+            <th scope="col">Owner's sex</th>
+            <th scope="col">Document Type</th>
+            <th scope="col">Document #</th>
+            <th scope="col">Optional Data</th>
+        </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ surname }}</td>
-        <td>{{ first_name }} </td>
-        <td> {{ country_issued }} </td>
-        <td> {{ owner_nationality }} </td>
-        <td> {{ birth_date }} </td>
-        <td> {{ expiration_date }} </td>
-        <td> {{ owner_sex }} </td>
-        <td> {{ document_type }} </td>
-        <td> {{ document_number }} </td>
-        <td> {{ optional_data }} </td>
-      </tr>
+        <tr>
+            <td>{{ surname }}</td>
+            <td>{{ first_name }} </td>
+            <td> {{ country_issued }} </td>
+            <td> {{ owner_nationality }} </td>
+            <td> {{ birth_date }} </td>
+            <td> {{ expiration_date }} </td>
+            <td> {{ owner_sex }} </td>
+            <td> {{ document_type }} </td>
+            <td> {{ document_number }} </td>
+            <td> {{ optional_data }} </td>
+        </tr>
 
     </tbody>
-  </table>
+</table>
 
-    </div>
+<h1> Checksum hash </h1>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Birth date checksum</th>
+            <th scope="col"> Expiration date checksum </th>
+            <th scope="col"> Document number checksum </th>
+            <th scope="col"> Optional data checksum </th>
+            <th scope="col"> Final checksum </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ birth_date_checksum }}</td>
+            <td>{{ expiration_date_checksum }} </td>
+            <td> {{ document_number_checksum }} </td>
+            <td> {{ optional_data_checksum }} </td>
+            <td> {{ final_checksum }} </td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+</div>

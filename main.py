@@ -59,19 +59,24 @@ def decode_passport_mrz():
                     f"Decoded text from file: {mrz_lines_from_img}")
                 result = passport_mrz_td3_decoder.decode_passport_mrz(
                     f"{mrz_lines_from_img[0]}\n{mrz_lines_from_img[1]}")
+                
+
+                flask_app.logger.debug("Decoded passport info: \r\n %s", result)
 
                 # cleanup file
                 os.remove(temp_file_path)
 
                 # Show results of parsing
-                return flask.render_template("submission_successful.html", surname=result.get("surname"), first_name=result.get("first_name"), country_issued=result.get("country_issued"), owner_nationality=result.get("owner_nationality"), birth_date=result.get("birth_date").strftime("%Y-%m-%d"), expiration_date=result.get("expiration_date").strftime('%Y-%m-%d'), owner_sex=result.get("owner_sex"), document_type=result.get("document_type"), document_number=result.get("document_number"), optional_data=result.get("optional_data"))
+                return flask.render_template("submission_successful.html", surname=result.get("surname"), first_name=result.get("first_name"), country_issued=result.get("country_issued"), owner_nationality=result.get("owner_nationality"), birth_date=result.get("birth_date").strftime("%Y-%m-%d"), expiration_date=result.get("expiration_date").strftime('%Y-%m-%d'), owner_sex=result.get("owner_sex"), document_type=result.get("document_type"), document_number=result.get("document_number"), optional_data=result.get("optional_data"), birth_date_checksum=result["hashes"].get("birth_date"), expiration_date_checksum=result["hashes"].get("expiry_date"), document_number_checksum=result["hashes"].get("document_number"), optional_data_checksum=result["hashes"].get("optional_data"), final_checksum=result["hashes"].get("final"))
 
             elif form.mrz_line_1 is not None and form.mrz_line_2 is not None:
 
                 result = passport_mrz_td3_decoder.decode_passport_mrz(
                     f"{mrz_line_1}\n{mrz_line_2}")
+                
+                flask_app.logger.debug("Decoded passport info: \r\n %s", result)
 
-                return flask.render_template("submission_successful.html", surname=result.get("surname"), first_name=result.get("first_name"), country_issued=result.get("country_issued"), owner_nationality=result.get("owner_nationality"), birth_date=result.get("birth_date").strftime("%Y-%m-%d"), expiration_date=result.get("expiration_date").strftime('%Y-%m-%d'), owner_sex=result.get("owner_sex"), document_type=result.get("document_type"), document_number=result.get("document_number"), optional_data=result.get("optional_data"))
+                return flask.render_template("submission_successful.html", surname=result.get("surname"), first_name=result.get("first_name"), country_issued=result.get("country_issued"), owner_nationality=result.get("owner_nationality"), birth_date=result.get("birth_date").strftime("%Y-%m-%d"), expiration_date=result.get("expiration_date").strftime('%Y-%m-%d'), owner_sex=result.get("owner_sex"), document_type=result.get("document_type"), document_number=result.get("document_number"), optional_data=result.get("optional_data"), birth_date_checksum=result["hashes"].get("birth_date"), expiration_date_checksum=result["hashes"].get("expiry_date"), document_number_checksum=result["hashes"].get("document_number"), optional_data_checksum=result["hashes"].get("optional_data"), final_checksum=result["hashes"].get("final"))
 
     else:
         flask_app.logger.error(
