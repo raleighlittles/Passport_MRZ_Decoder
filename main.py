@@ -2,6 +2,7 @@ import flask
 import flask_helper
 import web_form
 import sys
+import inspect
 import os
 
 import passport_mrz_td3_decoder
@@ -13,8 +14,10 @@ flask_app.config['SECRET_KEY'] = flask_helper.generate_secret_key(16)
 
 @flask_app.route("/decode", methods=["GET", "POST"])
 def decode_passport_mrz():
+
+    curr_function_name = inspect.stack()[0][3]
     
-    flask_app.logger.info("decode_passport_mrz() called")
+    flask_app.logger.info("%s() called", curr_function_name)
 
     form = web_form.SubmitPassportMRZForm()
 
@@ -35,6 +38,7 @@ def decode_passport_mrz():
             uploaded_photo = form.passport_img_file.data
 
             if uploaded_photo is not None:
+                # User uploaded a picture of their passport. Save it to a local file, then run processing on it
                 
                 # TODO why is size always 0?
                 flask_app.logger.info(f"User submitted a passport photo: '{uploaded_photo.filename}' with size {uploaded_photo.content_length}")
@@ -51,6 +55,9 @@ def decode_passport_mrz():
                 # cleanup file
                 os.remove(temp_file_path)
 
+                # Show results of parsing
+                return flask.render_template("submission_successful.html", surname=result.get("surname"), first_name=result.get("first_name"), country_issued=result.get("country_issued"), owner_nationality=result.get("owner_nationality"), birth_date=result.get("birth_date").strftime("%Y-%m-%d"), expiration_date=result.get("expiration_date").strftime('%Y-%m-%d'), owner_sex=result.get("owner_sex"), document_type=result.get("document_type"), document_number=result.get("document_number"), optional_data=result.get("optional_data"))
+
             elif form.mrz_line_1 is not None and form.mrz_line_2 is not None:
 
                 result = passport_mrz_td3_decoder.decode_passport_mrz(f"{mrz_line_1}\n{mrz_line_2}")
@@ -59,4 +66,4 @@ def decode_passport_mrz():
 
 
     else:
-        flask_app.logger.error("Received invalid HTTP request verb")
+        flask_app.logger.error("Received invalid HTTP request verb: %s", flask.request.method)
