@@ -1,8 +1,6 @@
-import argparse
 from mrz.checker.td3 import TD3CodeChecker
+import argparse
 import datetime
-import pdb
-import sys
 import os
 import pytesseract
 import typing
@@ -46,8 +44,7 @@ def decode_passport_mrz(passport_mrz) -> dict:
     passport_checker_result = TD3CodeChecker(passport_mrz)
 
     if not passport_checker_result:
-        print("Error: Passport was invalid!")
-        sys.exit(1)
+        raise ValueError("Passport was invalid -- either expired or it was not in the correct format.")
 
     return create_dict_from_result(passport_checker_result.fields())
 
