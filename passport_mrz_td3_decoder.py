@@ -9,7 +9,6 @@ import typing
 
 PASSPORT_MRZ_LINE_LENGTH = 44
 
-
 def create_dict_from_result(mrz_result) -> dict:
 
     # Uses 2-digit years (no century) instead of the standard 4-digit year
