@@ -8,8 +8,6 @@ import passport_mrz_td3_decoder
 
 flask_app = flask.Flask(flask_helper.generate_instance_id(), static_folder="static")
 
-num_passport_photos = 0
-
 # needed for CSRF
 flask_app.config['SECRET_KEY'] = flask_helper.generate_secret_key(16)
 
@@ -37,7 +35,8 @@ def decode_passport_mrz():
             uploaded_photo = form.passport_img_file.data
 
             if uploaded_photo is not None:
-
+                
+                # TODO why is size always 0?
                 flask_app.logger.info(f"User submitted a passport photo: '{uploaded_photo.filename}' with size {uploaded_photo.content_length}")
 
                 temp_file_path = os.path.join(os.getcwd(), uploaded_photo.filename)
@@ -49,6 +48,9 @@ def decode_passport_mrz():
                 flask_app.logger.info(f"Decoded text from file: {mrz_lines_from_img}")
                 result = passport_mrz_td3_decoder.decode_passport_mrz(f"{mrz_lines_from_img[0]}\n{mrz_lines_from_img[1]}")
 
+                # cleanup file
+                os.remove(temp_file_path)
+
             elif form.mrz_line_1 is not None and form.mrz_line_2 is not None:
 
                 result = passport_mrz_td3_decoder.decode_passport_mrz(f"{mrz_line_1}\n{mrz_line_2}")
@@ -58,4 +60,3 @@ def decode_passport_mrz():
 
     else:
         flask_app.logger.error("Received invalid HTTP request verb")
-
